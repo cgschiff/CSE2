@@ -52,7 +52,16 @@ public class CSE2Linear {
             System.out.println("");
             
             //sort the grades
-            Arrays.sort(grades);
+            for (int i = 0; i < grades.length; i++) {
+                for (int j = i + 1; j < grades.length; j++) {
+                    int holder = 0;
+                    if (grades[i] > grades[j]) {
+                    holder = grades[i];
+                    grades[i] = grades[j];
+                    grades[j] = holder;
+                    }
+                }
+            }
             
             System.out.println("Sorted:");
             //print the sorted grades
@@ -61,19 +70,32 @@ public class CSE2Linear {
             }
             System.out.println("");
             
-                        //get the target of the search
+            //get the target of the search
             Scanner targetScanner = new Scanner(System.in); //initialize the scanner
             System.out.println("Enter a grade to search for:");
             int target = targetScanner.nextInt();
             
             //search for the target
-            for(int k = 0; k<15; k++){
-                if(grades[k]==target){
-                    System.out.println("Target found after "+k+" iterations.");
+            boolean found = false;
+            int looking = 7;
+            int iterations = 1;
+            while(!found){
+                if(grades[looking]==target){
+                    System.out.println("Target found after "+iterations+" iterations.");
+                    found=true;
                     break;
                 }
-                if(k==15){
-                    System.out.println("Target not found after 15 iterations.");
+                if(grades[looking]<target){
+                    looking+=(8-(iterations));
+                    iterations++;
+                }
+                if(grades[looking]>target){
+                    looking-=(8-(iterations));
+                    iterations++;
+                }
+                if(iterations==9){
+                    System.out.println("Target not found after 8 iterations.");
+                    break;
                 }
             }
             
